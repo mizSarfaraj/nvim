@@ -23,13 +23,12 @@ return {
             keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol() end, opts,
                 { desc = "Find Worksplace Symbol" })
             keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts, { desc = "" })
-            keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts, { desc = "" })
-            keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts, { desc = "" })
-            keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts, { desc = "" })
-            keymap.set("n", "<leader>rr", function() vim.lsp.buf.references() end, opts, { desc = "" })
-            keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts, { desc = "" })
-            keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts, { desc = "" })
-            -- keymap.set('n', '<S-M-f>', vim.cmd.LspZeroFormat, opts, { desc = "[F]ormat File" })
+            keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts, { desc = "Go To Next Diagnostic" })
+            keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts, { desc = "Go To Previous Diagnostic" })
+            keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts, { desc = "Code Action" })
+            keymap.set("n", "<leader>rr", function() vim.lsp.buf.references() end, opts, { desc = "Code References" })
+            keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts, { desc = "Lsp Rename" })
+            keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts, { desc = "Signature Help" })
             keymap.set('n', '<leader>lr', function() require('telescope.builtin').lsp_references() end,
                 { noremap = true, silent = true, desc = "Find References in Telescope" })
             keymap.set('n', '<M-S-f>', function()
@@ -45,8 +44,8 @@ return {
         -- (not in youtube nvim video)
         -- local signs = { Error = "¿ ", Warn = "¿ ", Hint = "¿ ", Info = "¿ " }
         -- for type, icon in pairs(signs) do
-        -- local hl = "DiagnosticSign" .. type
-        -- vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+        --     local hl = "DiagnosticSign" .. type
+        --     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
         -- end
 
         -- configure html server
