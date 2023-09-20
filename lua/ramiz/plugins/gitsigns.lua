@@ -1,7 +1,7 @@
 return {
     'lewis6991/gitsigns.nvim',
     event = { "BufReadPre", "BufNewFile" },
-    config = function ()
+    config = function()
         require('gitsigns').setup {
             signs = {
                 add = { text = '│' },
@@ -44,9 +44,19 @@ return {
             },
             on_attach = function(bufnr)
                 local gs = package.loaded.gitsigns
-
+                local keymap = vim.keymap.set
                 local opts = { buffer = bufnr }
 
+                function spread(options, new_opts)
+                    local table = {}
+                    for key, value in pairs(options) do
+                        table[key] = value
+                    end
+                    for key, value in pairs(new_opts) do
+                        table[key] = value
+                    end
+                    return table
+                end
 
                 -- Navigation
                 vim.keymap.set('n', ']c', function()
@@ -62,19 +72,23 @@ return {
                 end, { expr = true })
 
                 -- Actions
-                vim.keymap.set('n', '<leader>hs', gs.stage_hunk, opts, { desc = 'Stage hunk' })
-                vim.keymap.set('n', '<leader>hr', gs.reset_hunk, opts, { desc = 'Reset hunk' })
-                vim.keymap.set('v', '<leader>hs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
-                vim.keymap.set('v', '<leader>hr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
-                vim.keymap.set('n', '<leader>hS', gs.stage_buffer, opts, { desc = 'Stage Buffer' })
-                vim.keymap.set('n', '<leader>hu', gs.undo_stage_hunk, opts, { desc = 'Unstage Hunk' })
-                vim.keymap.set('n', '<leader>hR', gs.reset_buffer, opts, { desc = 'Reset Buffer' })
-                vim.keymap.set('n', '<leader>hp', gs.preview_hunk, opts, { desc = 'Preview Hunk' })
-                vim.keymap.set('n', '<leader>hb', function() gs.blame_line { full = true } end, opts, { desc = 'Blames line' })
-                vim.keymap.set('n', '<leader>tb', gs.toggle_current_line_blame, opts, { desc = 'Toggle current blame line' })
-                vim.keymap.set('n', '<leader>hd', gs.diffthis, opts, { desc = 'Open in diff view' })
-                vim.keymap.set('n', '<leader>hD', function() gs.diffthis('~') end, opts, { desc = '' })
-                vim.keymap.set('n', '<leader>td', gs.toggle_deleted, opts, { desc = '' })
+                keymap('n', '<leader>hs', gs.stage_hunk, spread(opts, { desc = "Stage Hunk" }))
+                keymap('n', '<leader>hr', gs.reset_hunk, spread(opts, { desc = "Reset Hunk" }))
+                keymap('v', '<leader>hs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+                    spread(opts, { desc = "Stage Hunk (visual line mode)" }))
+                keymap('v', '<leader>hr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+                    spread(opts, { desc = "Reset Hunk (visual line mode)" }))
+                keymap('n', '<leader>hS', gs.stage_buffer, spread(opts, { desc = 'Stage Buffer' }))
+                keymap('n', '<leader>hu', gs.undo_stage_hunk, spread(opts, { desc = 'Unstage Hunk' }))
+                keymap('n', '<leader>hR', gs.reset_buffer, spread(opts, { desc = 'Reset Buffer' }))
+                keymap('n', '<leader>hp', gs.preview_hunk, spread(opts, { desc = 'Preview Hunk' }))
+                keymap('n', '<leader>hb', function() gs.blame_line { full = true } end,
+                    spread(opts, { desc = 'Blames line' }))
+                keymap('n', '<leader>tb', gs.toggle_current_line_blame,
+                    spread(opts, { desc = 'Toggle current blame line' }))
+                keymap('n', '<leader>hd', gs.diffthis, spread(opts, { desc = 'Open in diff view' }))
+                -- keymap('n', '<leader>hD', function() gs.diffthis('~') end, opts, { desc = '' })
+                -- keymap('n', '<leader>td', gs.toggle_deleted, opts, { desc = '' })
 
                 -- Text object
                 vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')

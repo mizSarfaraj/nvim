@@ -11,15 +11,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 
--- Modes
---   normal_mode = "n",
---   insert_mode = "i",
---   visual_mode = "v",
---   visual_block_mode = "x",
---   term_mode = "t",
---   command_mode = "c",
-
--- Normal --
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
@@ -43,8 +34,7 @@ keymap("n", "<A-k>", ":m .-2<CR>==", opts)
 keymap("n", "J", "mzJ`z", opts)
 
 -- Insert --
--- Press jk fast to exit insert mode
-keymap("i", "jk", "<ESC>", opts)
+-- Press kj fast to exit insert mode
 keymap("i", "kj", "<ESC>", opts)
 
 -- Visual --
@@ -64,7 +54,13 @@ keymap("x", "K", ":m '<-2<CR>gv=gv", opts)
 keymap("x", "<A-j>", ":m '>+1<CR>gv=gv", opts)
 keymap("x", "<A-k>", ":m '<-2<CR>gv=gv", opts)
 
+-- greatest remap ever
 keymap("x", "<leader>p", [["_dP]])
+
+-- next greatest remap ever : asbjornHaland
+keymap({"n", "v"}, "<leader>y", [["+y]])
+keymap("n", "<leader>Y", [["+Y]])
+keymap({"n", "v"}, "<leader>d", [["_d]])
 
 keymap('n', '<leader>tt', [[ <cmd> split term://bash | resize 18 <CR>]])
 keymap('n', '<leader>tv', [[ <cmd> vsplit term://bash | resize 18 <CR>]])
