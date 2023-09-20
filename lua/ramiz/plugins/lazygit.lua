@@ -5,6 +5,6 @@ return {
         "nvim-lua/plenary.nvim",
     },
     keys = {
-        {"<leader>gg", mode = {"n", "i", "v"}, vim.cmd.LazyGit}
+        { "<leader>gg", mode = {"n", "v"}, vim.cmd.LazyGit,  {desc = "Open Lazygit"}}
     }
 }
